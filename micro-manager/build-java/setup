@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# Copyright (C) 2018 Laboratory of Experimental Biophysics
+# Ecole Polytechnique Federale de Lausanne (EPFL), Switzerland
+#
+# Compiles Micro-Manager.
+#
+# Usage: ./setup SRC_DIR BUILD_DIR CONFIGURE
+#
+# SRC_DIR is the directory containing the Micro-Manager GitHub
+# repository.
+#
+# BUILD_DIR is the directory where the build artifacts should be
+# placed.
+#
+# If CONFIGURE=true, the build system is remade and the configure
+# script is rerun before running 'make' and 'make install'. If
+# CONFIGURE=false, only 'make' and 'make install' or run.
+#
+# Kyle M. Douglass, 2018
+#
+
+src_dir=$1
+build_dir=$2
+run_config=$3
+
+# Move into the source directory.
+cd "${src_dir}"
+
+# Undo any previous patches.
+git checkout -- DeviceAdapters/WieneckeSinske/CAN29.cpp
+git checkout -- DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp
+
+# Patch the broken WieneckeSinske device adapter.
+patch DeviceAdapters/WieneckeSinske/CAN29.cpp < ../patches/CAN29.cpp.diff \
+&& patch DeviceAdapters/WieneckeSinske/WieneckeSinske.cpp < ../patches/WieneckeSinske.cpp.diff
+
+# Compile Micro-Manager.
+if [ "${run_config}" = true ]; then
+    # Remake the entire build system, then compile from scratch.
+    ./autogen.sh
+    ./configure \
+        --prefix="${build_dir}"
+elif [ "${run_config}" = false ]; then
+    echo "CONFIGURE=false"
+    echo "Skipping generation of the configure script..."
+else
+    echo "${run_config} : Unrecognized argument."
+    echo "Pass \"true\" to run the full build process."
+    echo "Pass \"false\" to run only \"make\" and \"make install\"."
+    exit 1
+fi
+
+make fetchdeps
+make
+make install
+chmod -R a+w "${build_dir}"

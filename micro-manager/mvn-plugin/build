@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+#
+# Creates the image for building the Micro-Manager plugins with Maven.
+#
+# Usage: ./build TARGETS_DIR
+#
+# TARGETS_DIR is the path to the Micro-Manager build artifacts.
+#
+
+targets_dir=$1
+
+cp Dockerfile ${targets_dir}
+cp setup ${targets_dir}
+cd ${targets_dir}
+
+docker build \
+       -t epflbiophys/micro-manager:mvn-plugin \
+       .
+
+rm Dockerfile || true
+rm setup || true

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#
+# Creates the image for building the Micro-Manager Java components.
+#
+# Usage: ./build
+#
+
+docker build \
+       -t epflbiophys/micro-manager:build-java \
+       .

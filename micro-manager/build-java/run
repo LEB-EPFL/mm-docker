@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Copyright (C) 2018 Laboratory of Experimental Biophysics
+# Ecole Polytechnique Federale de Lausanne (EPFL), Switzerland
+#
+# Compiles the Micro-Manager Java components.
+#
+# Usage: ./run HOST_DIR CONT_DIR SETUP_SCRIPT CONFIGURE
+#
+# HOST_DIR is the parent folder containing the micro-manager Git
+# repository, the 3rdpartypublic Subversion repository, and any
+# additional build resources on the host system.
+#
+# CONT_DIR the directory corresponding to the HOST_DIR in the Docker
+# container.
+#
+# SETUP_SCRIPT is the full path to the setup script--including the
+# filename--inside the container.
+#
+# If CONFIGURE=true, the build system is remade and the configure
+# script is rerun before running 'make' and 'make install'. If
+# CONFIGURE=false, only 'make' and 'make install' are run.
+#
+# The compiled program files are stored in a bind mount volume so that
+# they may be copied into the deployment container.
+#
+
+host_src_dir="$1"
+cont_src_dir="$2"
+setup_script="$3"
+config_flag="$4"
+
+cont_build_dir="${cont_src_dir}/targets"
+
+cmd="${setup_script} ${cont_src_dir}/micro-manager ${cont_build_dir} ${config_flag}"
+
+# Remove the build artifacts from previous builds.
+if [ "${config_flag}" == true ] || [ "${config_flag}" == false ]; then
+    rm -rf ${src_dir}/targets || true
+fi
+
+docker run --rm \
+       -v ${host_src_dir}:${cont_src_dir} \
+       --name mm-build-java \
+       epflbiophys/micro-manager:build-java \
+       ${cmd}
+
