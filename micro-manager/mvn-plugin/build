@@ -4,16 +4,16 @@
 #
 # Creates the image for building the Micro-Manager plugins with Maven.
 #
-# Usage: ./build TARGETS_DIR
+# Usage: ./build TARGET_DIR
 #
-# TARGETS_DIR is the path to the Micro-Manager build artifacts.
+# TARGET_DIR is the path to the Micro-Manager build artifacts.
 #
 
-targets_dir=$1
+target_dir=$1
 
-cp Dockerfile ${targets_dir}
-cp setup ${targets_dir}
-cd ${targets_dir}
+cp Dockerfile ${target_dir}
+cp setup ${target_dir}
+cd ${target_dir}
 
 docker build \
        -t epflbiophys/micro-manager:mvn-plugin \
