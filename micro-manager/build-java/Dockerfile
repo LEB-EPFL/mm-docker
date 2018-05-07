@@ -10,7 +10,7 @@ MAINTAINER Kyle M. Douglass <kyle.m.douglass@gmail.com>
 ARG APP_ROOT="/src"
 ARG SRC_DIR="${APP_ROOT}/micro-manager"
 ARG MM_SRC_DIR="${SRC_DIR}/micro-manager"
-ARG MM_BUILD_DIR="${SRC_DIR}/targets"
+ARG MM_BUILD_DIR="${SRC_DIR}/target"
 
 RUN apt update && apt -y install --no-install-recommends \
     ant \

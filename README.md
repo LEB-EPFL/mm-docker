@@ -40,8 +40,9 @@ Compile the Micro-Manager Java components:
   script is rerun before running 'make' and 'make install'. If
   CONFIGURE=false, only 'make' and 'make install' are run.
   
-- The build artifacts will be saved saved to the host system in the
-  <HOST_DIR>/target directory.
+- The build artifacts will be saved to the host system in the
+  directory specified in the Dockerfile (typically this is
+  <HOST_DIR>/target).
   
 ## Micro-Manager plugins (Maven)
 
