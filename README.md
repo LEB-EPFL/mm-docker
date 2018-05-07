@@ -73,3 +73,8 @@ Compile a Micro-Manager Maven plugin.
   
 # Acknowledgements
 - [Micro-Manager](https://micro-manager.org/)
+- [Docker](https://www.docker.com/)
+- [Maven](https://maven.apache.org/)
+
+...and the many, many people behind *all* the software that we
+rely on.
