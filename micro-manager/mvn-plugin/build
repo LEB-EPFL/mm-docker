@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Copyright (C) 2018 Laboratory of Experimental Biophysics
+# Ecole Polytechnique Federale de Lausanne (EPFL), Switzerland
 #
 # Creates the image for building the Micro-Manager plugins with Maven.
 #

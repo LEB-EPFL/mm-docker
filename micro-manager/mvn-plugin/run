@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Copyright (C) 2018 Laboratory of Experimental Biophysics
+# Ecole Polytechnique Federale de Lausanne (EPFL), Switzerland
+#
+# Compiles a Micro-Manager Maven plugin.
+#
+# Usage: ./run PLUGIN_DIR
+#
+# PLUGIN_DIR is the root directory of the plugin project and typically
+# contains the pom.xml file.
+#
+# You must have the epflbiophys/micro-manager:mvn-plugin image already
+# installed.
+#
+
+plugin_dir=$1
+
+docker run -it --rm \
+       -v "${plugin_dir}":/opt/maven \
+       -w /opt/maven \
+       epflbiophys/micro-manager:mvn-plugin \
+       mvn clean install
