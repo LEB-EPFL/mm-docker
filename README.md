@@ -1,7 +1,7 @@
 This repository contains Dockerfiles that are used to build components
 of Micro-Manager.
 
-# Builds
+# Quick reference
 
 ## Micro-Manager Java components
 
@@ -34,7 +34,9 @@ Compile the Micro-Manager Java components:
   container.
 
 - SETUP_SCRIPT is the full path to the setup script--including the
-  filename--inside the container.
+  filename--inside the container. Typically, it is /src/setup. You can
+  verify this in the
+  [Dockerfile](https://github.com/LEB-EPFL/mm-docker/blob/master/micro-manager/build-java/Dockerfile)
 
 - If CONFIGURE=true, the build system is remade and the configure
   script is rerun before running 'make' and 'make install'. If
@@ -74,10 +76,11 @@ Compile a Micro-Manager 2.0 plugin with Maven.
 - PLUGIN_DIR is the root directory of your plugin, which typically
   contains the pom.xml file.
   
-# Docker Images
+# Docker images
 
 Pre-built Docker images may be pulled from the [LEB Dockerhub
-repository](https://hub.docker.com/r/epflbiophys/micro-manager/).
+repository](https://hub.docker.com/r/epflbiophys/micro-manager/). Only
+the run scripts are needed if using the pre-built images.
 
 # Acknowledgements
 - [Micro-Manager](https://micro-manager.org/)
