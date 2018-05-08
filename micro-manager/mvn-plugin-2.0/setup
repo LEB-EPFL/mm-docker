@@ -11,6 +11,7 @@
 jars_dir="$1"
 cd "${jars_dir}"
 
+# Note that the version number is arbitrary.
 for filename in *.jar; do
     name="${filename%.*}"
     mvn install:install-file \

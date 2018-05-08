@@ -17,4 +17,9 @@ RUN ${MM_ROOT}/setup "${JARS_DIR}"
 
 # Copy just the build dependencies into the image.
 FROM maven:3.5.3-jdk-8 as app
-COPY --from=install_jars ${MM_MVN_REPO} ${MM_MVN_REPO}
+
+ARG MM_MVN_REPO="/root/.m2/repository/org/micro-manager"
+
+COPY --from=install_jars ${MM_MVN_REPO}/MMCoreJ ${MM_MVN_REPO}/MMCoreJ/
+COPY --from=install_jars ${MM_MVN_REPO}/MMAcqEngine ${MM_MVN_REPO}/MMAcqEngine/
+COPY --from=install_jars ${MM_MVN_REPO}/MMJ_ ${MM_MVN_REPO}/MMJ_/

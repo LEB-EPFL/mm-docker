@@ -44,10 +44,10 @@ Compile the Micro-Manager Java components:
   directory specified in the Dockerfile (typically this is
   <HOST_DIR>/target).
   
-## Micro-Manager plugins (Maven)
+## Micro-Manager 2.0 plugins (Maven)
 
 ```
-cd micro-manager/mvn-plugin
+cd micro-manager/mvn-plugin-2.0
 ```
 
 Create an image containing Maven and the Micro-Manager dependency
@@ -60,9 +60,12 @@ Create an image containing Maven and the Micro-Manager dependency
 - TARGET_DIR is the path to the folder containing the Micro-Manager
   build artifacts.
   
+- The image will only include MMCoreJ, MMAcqEngine, and MMJ_ installed
+  into the container's local Maven repository.
+  
 -----
 
-Compile a Micro-Manager Maven plugin.
+Compile a Micro-Manager 2.0 plugin with Maven.
 
 ```
 ./run PLUGIN_DIR
@@ -71,6 +74,11 @@ Compile a Micro-Manager Maven plugin.
 - PLUGIN_DIR is the root directory of your plugin, which typically
   contains the pom.xml file.
   
+# Docker Images
+
+Pre-built Docker images may be pulled from the [LEB Dockerhub
+repository](https://hub.docker.com/r/epflbiophys/micro-manager/).
+
 # Acknowledgements
 - [Micro-Manager](https://micro-manager.org/)
 - [Docker](https://www.docker.com/)

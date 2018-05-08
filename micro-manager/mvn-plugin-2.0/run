@@ -18,5 +18,5 @@ plugin_dir=$1
 docker run -it --rm \
        -v "${plugin_dir}":/opt/maven \
        -w /opt/maven \
-       epflbiophys/micro-manager:mvn-plugin \
+       epflbiophys/micro-manager:mvn-plugin-2.0 \
        mvn clean install
