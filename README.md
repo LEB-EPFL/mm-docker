@@ -48,7 +48,7 @@ Compile the Micro-Manager Java components:
 
 ### Example
 ```
-./run ~/src/micro-manager /src/micromanager /src/setup true                                                                 
+./run ~/src/micro-manager /src/micromanager /src/setup true
 ```
 
 ## Micro-Manager 2.0 plugins (Maven)
