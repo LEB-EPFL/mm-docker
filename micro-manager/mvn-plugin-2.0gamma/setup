@@ -17,7 +17,7 @@ for filename in *.jar; do
     mvn install:install-file \
 	-Dfile="${filename}" \
         -DgroupId=org.micro-manager \
-	-DartifactId="${name}" \
+	-DartifactId="${name}-2.0gamma" \
 	-Dversion=1.0 \
 	-Dpackaging=jar \
         -DgeneratePom=true

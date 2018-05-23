@@ -45,11 +45,19 @@ Compile the Micro-Manager Java components:
 - The build artifacts will be saved to the host system in the
   directory specified in the Dockerfile (typically this is
   <HOST_DIR>/target).
-  
+
+### Example
+```
+./run ~/src/micro-manager /src/micromanager /src/setup true
+```
+
 ## Micro-Manager 2.0 plugins (Maven)
 
 ```
 cd micro-manager/mvn-plugin-2.0
+
+# If you wish to build a plugin for MM2.0gamma, use this instead:
+cd micro-manager/mvn-plugin-2.0gamma
 ```
 
 Create an image containing Maven and the Micro-Manager dependency
