@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#
+# Installs the Micro-Manager .jars into a local Maven repository.
+#
+# Usage: setup JARS_DIR
+#
+# JARS_DIR is the path to the .jar files to install into the local
+# Maven repository.
+#
+
+jars_dir="$1"
+cd "${jars_dir}"
+
+# Note that the version number is arbitrary.
+for filename in *.jar; do
+    name="${filename%.*}"
+    mvn install:install-file \
+	-Dfile="${filename}" \
+        -DgroupId=org.micro-manager \
+	-DartifactId="${name}" \
+	-Dversion=1.0 \
+	-Dpackaging=jar \
+        -DgeneratePom=true
+done
