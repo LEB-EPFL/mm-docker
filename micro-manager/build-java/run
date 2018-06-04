@@ -36,6 +36,7 @@ cmd="${setup_script} ${cont_src_dir}/micro-manager ${cont_build_dir} ${config_fl
 # Remove the build artifacts from previous builds.
 if [ "${config_flag}" == true ] || [ "${config_flag}" == false ]; then
     rm -rf ${src_dir}/targets || true
+    mkdir -p ${src_dir}/targets
 fi
 
 docker run --rm \

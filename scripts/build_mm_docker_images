@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# Builds the Micro-Manager docker images.
+#
+# USAGE: build_mm_docker_images MM_DOCKER_DIR MM_SRC_DIR
+#
+# MM_DOCKER_DIR is the absolute path to the directory that contains
+# the mm-docker files.
+#
+# MM_SRC_DIR is the absolute path to the directory that contains the
+# Micro-Manager Git folder, the 3rdpartypublic folder, etc.
+# 
+# This script is intended for automated builds of the epflbiophys
+# Micro-Manager Docker images. To create daily builds, first make this
+# file executable using `chmod a+x build_mm_docker_images` and then
+# place it in /etc/cron.daily. Be sure to pass the correct values
+# for the project folders as arguments, or change the default values
+# below.
+#
+# Kyle M. Douglass
+# kyle.m.douglass@gmail.com
+# 2018
+#
+
+default_mm_docker_dir="/home/douglass/src/mm-docker"
+default_mm_src_dir="/mnt/storage-2TB/micro-manager"
+mm_docker_dir="${1:-${default_mm_docker_dir}}"
+mm_src_dir="${2:-${default_mm_src_dir}}"
+
+# Get the latest 3rdpartypublic files
+cd "${mm_src_dir}"
+svn co https://valelab4.ucsf.edu/svn/3rdpartypublic/
+while [ $? -ne 0 ]; do :
+    # Continues the checkout in case timeout errors occur
+    svn cleanup 3rdpartypublic
+    svn co "${svn_url}"
+done
+
+cd "${mm_src_dir}/micro-manager"
+echo "Switching to the mm2 ViewerPlusCV branch..."
+git checkout ViewerPlusCV
+git pull nicost ViewerPlusCV
+
+if [ $? -eq 0 ]; then
+    echo "Done checking out the Micro-Manager source code!"
+else
+    echo "Error while checking Micro-Manager source code."
+    exit 1
+fi
+
+# Switch to the mm-docker folder and build the images
+echo "Creating the build-java Docker image..."
+cd "${mm_docker_dir}/micro-manager/build-java"
+./build
+docker push epflbiophys/micro-manager:build-java
+
+# Compile Micro-Manager
+./run /mnt/storage-2TB/micro-manager /src/micro-manager /src/setup true
+echo "Done!"
+
+echo "Creating the mvn-plugin-2.0gamma Docker image..."
+cd "${mm_docker_dir}/micro-manager/mvn-plugin-2.0gamma"
+./build /mnt/storage-2TB/micro-manager/targets
+docker push epflbiophys/micro-manager:mvn-plugin-2.0gamma

@@ -83,7 +83,24 @@ Compile a Micro-Manager 2.0 plugin with Maven.
 
 - PLUGIN_DIR is the root directory of your plugin, which typically
   contains the pom.xml file.
-  
+
+## Micro-Manager Nightly Builds
+
+There is a convenience script called
+[build_mm_docker_images](https://github.com/LEB-EPFL/mm-docker/blob/master/scripts/build_mm_docker_images)
+in the scripts folder. This script may be used with cron to schedule
+periodic builds of Micro-Manager and the Docker images. To run this
+script daily, for example, place it in /etc/cron.daily and make it
+executable:
+
+```
+chmod a+x build_mm_docker_images
+```
+
+You will almost certainly need to modify some of the default
+directories and the name of Micro-Manager Git branch within the script
+to match your build targets.
+
 # Docker images
 
 Pre-built Docker images may be pulled from the [LEB Dockerhub
