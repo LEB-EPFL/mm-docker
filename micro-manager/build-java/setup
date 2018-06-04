@@ -36,6 +36,9 @@ patch DeviceAdapters/WieneckeSinske/CAN29.cpp < ../patches/CAN29.cpp.diff \
 
 # Compile Micro-Manager.
 if [ "${run_config}" = true ]; then
+    echo "Cleaning all previous build artifacts..."
+    make clean
+    
     # Remake the entire build system, then compile from scratch.
     ./autogen.sh
     ./configure \
